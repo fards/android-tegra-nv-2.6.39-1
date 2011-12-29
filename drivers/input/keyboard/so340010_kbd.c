@@ -106,10 +106,11 @@ struct so340010_kbd_info {
 };
 
 static struct so340010_kbd_info key_table[] = {
-	{ 0x0008, KEY_BACK },
+    { 0x0008, KEY_SEARCH },
 	{ 0x0004, KEY_MENU },
-	{ 0x0002, KEY_HOME },
-	{ 0x0001, KEY_SEARCH },
+	{ 0x0002, KEY_BACK },
+	{ 0x0001, KEY_HOME },
+
 };
 
 static int key_num = sizeof(key_table)/sizeof(key_table[0]);
@@ -184,7 +185,7 @@ static int so340010_i2c_read(struct so340010_kbd_dev *dev, unsigned short reg_st
 
 	msgs[0].addr = dev->client->addr;
 	msgs[0].len = 2;
-	msgs[0].buf = &reg_buffer;
+	msgs[0].buf = reg_buffer;
 	msgs[0].flags = 0;
 	
 	msgs[1].addr = dev->client->addr;
@@ -383,7 +384,7 @@ static void so340010_timer_func(unsigned long __dev)
 static void so340010_work_func(struct work_struct *work)
 {
 	int i, ret;
-	unsigned int gpio_val, button_val;
+	unsigned short gpio_val, button_val;
 	struct so340010_kbd_dev *dev;
 
 	dev = (struct so340010_kbd_dev *)container_of(work, struct so340010_kbd_dev, work);
@@ -471,7 +472,7 @@ static void so340010_kbd_early_suspend(struct early_suspend *es)
 	logd(TAG "so340010_kbd_early_suspend() IN\r\n");
 	
 	dev = (struct so340010_kbd_dev *)container_of(es, struct so340010_kbd_dev, early_suspend);
-	enable_irq(dev->client->irq);
+	disable_irq(dev->client->irq);
 	//NvOdmGpioInterruptMask(dev->irq_handle, NV_TRUE);
 	cancel_work_sync(&dev->work);
 	so340010_sleep(dev, true);
@@ -489,7 +490,7 @@ static void so340010_kbd_late_resume(struct early_suspend *es)
 	if (so340010_reset(dev)) {
 		logd(TAG "so340010_reset_failed\r\n");
 	}
-	disable_irq(dev->client->irq);
+	enable_irq(dev->client->irq);
 	//NvOdmGpioInterruptMask(dev->irq_handle, NV_FALSE);
 }
 #endif
