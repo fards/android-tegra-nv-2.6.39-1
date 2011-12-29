@@ -57,7 +57,7 @@ static struct gpio_keys_button adam_keys[] = {
 		.type = EV_KEY,		
 		.desc = "power",
 	},
-	[3] = {
+	/*[3] = {
 		.gpio = ADAM_KEY_BACK,
 		.active_low = true,
 		.debounce_interval = 10,
@@ -65,7 +65,7 @@ static struct gpio_keys_button adam_keys[] = {
 		.code = KEY_BACK,
 		.type = EV_KEY,		
 		.desc = "back",
-	},
+	},*/
 };
 
 

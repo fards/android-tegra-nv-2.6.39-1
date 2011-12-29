@@ -514,6 +514,24 @@ config KEYBOARD_TNETV107X
 	  To compile this driver as a module, choose M here: the
 	  module will be called tnetv107x-keypad.
 
+config KEYBOARD_SHORTLONG_GPIO
+	tristate "GPIO Buttons with different Short or Long press codes"
+	depends on GENERIC_GPIO
+	help
+	  This driver implements support for buttons connected
+	  to GPIO pins of various CPUs (and some other chips) 
+	  that emit different key codes depending on the time
+	  the key was hold pressed.
+
+	  Say Y here if your device has buttons connected
+	  directly to such GPIO pins.  Your board-specific
+	  setup logic must also provide a platform device,
+	  with configuration data saying which GPIOs are used.
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called gpio_shortlong_keys.
+
+
 config KEYBOARD_TWL4030
 	tristate "TI TWL4030/TWL5030/TPS659x0 keypad support"
 	depends on TWL4030_CORE

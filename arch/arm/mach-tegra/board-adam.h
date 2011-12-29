@@ -27,7 +27,7 @@
 #define ADAM_KEY_VOLUMEUP 	TEGRA_GPIO_PD4 	/* 0=pressed */
 #define ADAM_KEY_VOLUMEDOWN 	TEGRA_GPIO_PV4 	/* 0=pressed */
 #define ADAM_KEY_POWER 		TEGRA_GPIO_PV2 	/* 0=pressed */
-#define ADAM_KEY_BACK		TEGRA_GPIO_PH0	/* 0=pressed */
+//#define ADAM_KEY_BACK		TEGRA_GPIO_PH0	/* 0=pressed */
 
 /* #define ADAM_EMC_SAMSUNG		*/
 /* #define ADAM_EMC_ELPIDA50NM	*/
@@ -53,12 +53,13 @@
 
 // Adam memory is 2xSZ_512M
 #define ADAM_MEM_SIZE 		SZ_512M			/* Total memory */
-#define ADAM_MEM_BANKS		2
+#define ADAM_MEM_BANKS		1
 
-#define ADAM_GPU_MEM_SIZE 		SZ_128M		/* Memory reserved for GPU */
+//#define ADAM_GPU_MEM_SIZE 		SZ_128M		/* Memory reserved for GPU */
 //#define ADAM_GPU_MEM_SIZE 	SZ_64M			/* Memory reserved for GPU */
+#define ADAM_GPU_MEM_SIZE    (45*SZ_2M)			/* Memory reserved for GPU */
 
-#define ADAM_FB1_MEM_SIZE 	SZ_8M			/* Memory reserved for Framebuffer 1: LCD */
+#define ADAM_FB1_MEM_SIZE 	SZ_4M			/* Memory reserved for Framebuffer 1: LCD */
 #define ADAM_FB2_MEM_SIZE 	SZ_8M			/* Memory reserved for Framebuffer 2: HDMI out */
 
 #define DYNAMIC_GPU_MEM 1						/* use dynamic memory for GPU */

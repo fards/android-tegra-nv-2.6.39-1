@@ -38,3 +38,4 @@ obj-$(CONFIG_CHARGER_ISP1704)	+= isp1704_charger.o
 obj-$(CONFIG_CHARGER_TWL4030)	+= twl4030_charger.o
 obj-$(CONFIG_CHARGER_GPIO)	+= gpio-charger.o
 obj-$(CONFIG_MAX8907C_CHARGER)	+= max8907c-charger.o
+obj-$(CONFIG_BATTERY_TPS6586X)	+= tps6586x_battery.o

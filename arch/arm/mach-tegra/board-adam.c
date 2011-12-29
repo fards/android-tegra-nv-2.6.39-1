@@ -66,6 +66,7 @@
 #include "clock.h"
 #include "gpio-names.h"
 #include "devices.h"
+#include "pm.h"
 #include "wakeups-t2.h"
 
 
@@ -133,8 +134,8 @@ void adam_gps_mag_deinit(void)
 EXPORT_SYMBOL_GPL(adam_gps_mag_deinit);
 
 static struct tegra_suspend_platform_data adam_suspend = {
-	.cpu_timer = 5000,
-	.cpu_off_timer = 5000,
+	.cpu_timer = 500,
+	.cpu_off_timer = 500,
 	.core_timer = 0x7e7e,
 	.core_off_timer = 0x7f,
     .corereq_high = false,
@@ -277,9 +278,9 @@ static void __init tegra_adam_fixup(struct machine_desc *desc,
 #else
 	mi->bank[0].size  = ADAM_MEM_SIZE - ADAM_GPU_MEM_SIZE;
 #endif
-	// Adam has two 512MB banks. Easier to hardcode if we leave ADAM_MEM_SIZE at 512MB
-	mi->bank[1].start = ADAM_MEM_SIZE;
-	mi->bank[1].size = ADAM_MEM_SIZE;
+	// Adam has two 512MB banks. Easier to hardcode if we leave SMBA1002_MEM_SIZE at 512MB
+	//mi->bank[1].start = SMBA1002_MEM_SIZE;
+	//mi->bank[1].size = SMBA1002_MEM_SIZE;
 } 
 
 MACHINE_START(HARMONY, "harmony")

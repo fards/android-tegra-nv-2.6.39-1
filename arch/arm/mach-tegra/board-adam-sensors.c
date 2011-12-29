@@ -34,13 +34,14 @@ static struct i2c_board_info __initdata adam_i2c_bus0_sensor_info[] = {
 		I2C_BOARD_INFO("bq20z75-battery", 0x0B),
 		.irq = TEGRA_GPIO_TO_IRQ(TEGRA_GPIO_PH2),
 	},
+};
+
+static struct i2c_board_info __initdata adam_i2c_bus2_sensor_info[] = {
 	{
 		I2C_BOARD_INFO("so340010_kbd", 0x2c),
 		.irq = TEGRA_GPIO_TO_IRQ(TEGRA_GPIO_PV6),
 	},
-};
-
-static struct i2c_board_info __initdata adam_i2c_bus2_sensor_info[] = {
+	
 	{
 		I2C_BOARD_INFO("isl29023", 0x44),
 		.irq = TEGRA_GPIO_TO_IRQ(TEGRA_GPIO_PV5),
@@ -49,9 +50,7 @@ static struct i2c_board_info __initdata adam_i2c_bus2_sensor_info[] = {
 		I2C_BOARD_INFO("lis3lv02d", 0x1C),
 		.irq = TEGRA_GPIO_TO_IRQ(TEGRA_GPIO_PJ0),
 	},
-	{
-		I2C_BOARD_INFO("mmc31xx", 0x30),
-	},
+	
 };
 
 static struct adt7461_platform_data adam_adt7461_pdata = {
