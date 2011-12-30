@@ -90,7 +90,7 @@ static __initdata struct tegra_clk_init_table adam_clk_init_table[] = {
 	/* pll_c is used as graphics clock and system clock */
 	{ "pll_c",		"clk_m",		600000000,	true},		/* always on - graphics and camera clocks */
 //	{ "pll_c_out1",	"pll_c",		108000000,	true},		/* must be always on - system clock */
-	{ "pll_c_out1",	"pll_c",		171428571,	true},		/* must be always on - system clock */
+    { "pll_c_out1", "pll_c", 240000000, true}, /* must be always on - system clock */
 
 	{ "sclk",		"pll_p_out2",	108000000,	true},		/* must be always on */
 	{ "avp.sclk",   	NULL,		108000000,      false},         /* must be always on */
@@ -114,9 +114,9 @@ static __initdata struct tegra_clk_init_table adam_clk_init_table[] = {
 #endif
 
 	/* pll_d and pll_d_out0 are clock sources for HDMI output */
-	{ "pll_d",		"clk_m",		  5000000,	true},		/* hdmi clock */
+    { "pll_d", "clk_m", 594000000, true}, /* hdmi clock */
 //	{ "pll_d_out0", "pll_d",    	  5000000,  true},		/* hdmi clock */
-	{ "pll_d_out0", "pll_d",    	  2500000,  true},		/* hdmi clock */
+    { "pll_d_out0", "pll_d", 300000000 , true}, /* hdmi clock */
 
 	{ "clk_d",		"clk_m",		 24000000,	true},
 
