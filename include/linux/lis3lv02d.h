@@ -104,12 +104,12 @@ struct lis3lv02d_platform_data {
 #define LIS3_HIPASS2_DISABLE    (1 << 3)
 	unsigned char hipass_ctrl;
 #define LIS3_NO_MAP		0
-#define LIS3_DEV_X		1
-#define LIS3_DEV_Y		2
-#define LIS3_DEV_Z		3
-#define LIS3_INV_DEV_X	       -1
-#define LIS3_INV_DEV_Y	       -2
-#define LIS3_INV_DEV_Z	       -3
+#define LIS3_DEV_X		-1
+#define LIS3_DEV_Y		-2
+#define LIS3_DEV_Z		-3
+#define LIS3_INV_DEV_X	       1
+#define LIS3_INV_DEV_Y	       2
+#define LIS3_INV_DEV_Z	       3
 	s8 axis_x;
 	s8 axis_y;
 	s8 axis_z;

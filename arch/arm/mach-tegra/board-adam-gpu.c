@@ -189,7 +189,7 @@ static struct tegra_fb_data adam_fb_data = {
 	.win		= 0,
 	.xres		= 1024,
 	.yres		= 600,
-	.bits_per_pixel	= 16,
+	.bits_per_pixel	= 32,
 };
 
 #if defined(ADAM_1920x1080HDMI)
