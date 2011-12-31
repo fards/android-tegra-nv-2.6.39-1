@@ -134,23 +134,14 @@ void adam_gps_mag_deinit(void)
 EXPORT_SYMBOL_GPL(adam_gps_mag_deinit);
 
 static struct tegra_suspend_platform_data adam_suspend = {
-	.cpu_timer = 500,
-	.cpu_off_timer = 500,
+	.cpu_timer = 5000,
+	.cpu_off_timer = 5000,
 	.core_timer = 0x7e7e,
 	.core_off_timer = 0x7f,
     .corereq_high = false,
 	.sysclkreq_high = true,
+	//.separate_req = true,
 	.suspend_mode = TEGRA_SUSPEND_LP1,
-#if LINUX_VERSION_CODE <= KERNEL_VERSION(2,6,38) /* NB: 2.6.39+ handles this automatically */
-	.separate_req = true,	
-	.wake_enb = ADAM_WAKE_KEY_POWER | 
-				ADAM_WAKE_KEY_RESUME | 
-				TEGRA_WAKE_RTC_ALARM,
-	.wake_high = TEGRA_WAKE_RTC_ALARM,
-	.wake_low = ADAM_WAKE_KEY_POWER | 
-				ADAM_WAKE_KEY_RESUME,
-	.wake_any = 0,
-#endif
 };
 
 static void __init tegra_adam_init(void)

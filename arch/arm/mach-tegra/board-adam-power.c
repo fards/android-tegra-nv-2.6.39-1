@@ -339,8 +339,7 @@ static struct regulator_init_data vdd_aon_data =
 		.enabled_at_boot= _atboot,					\
 		.init_data		= &_data,					\
 	}
-//		.set_as_input_to_enable = _itoen,			\
-
+//		.set_as_input_to_enable = _itoen,			
 /* The next 3 are fixed regulators controlled by PMU GPIOs */
 static struct fixed_voltage_config ldo_tps74201_cfg  
 	= FIXED_REGULATOR_CONFIG(ldo_tps74201  , 1500, PMU_GPIO0 , 0,0, 200000, 0, ldo_tps74201_data);
@@ -566,14 +565,14 @@ static struct platform_device *adam_power_devices[] __initdata = {
 int __init adam_power_register_devices(void)
 {
 	int err;
-	//void __iomem *pmc = IO_ADDRESS(TEGRA_PMC_BASE);
-	//u32 pmc_ctrl;
+	void __iomem *pmc = IO_ADDRESS(TEGRA_PMC_BASE);
+	u32 pmc_ctrl;
 
 	/* configure the power management controller to trigger PMU
 	 * interrupts when low
 	 */
-	//pmc_ctrl = readl(pmc + PMC_CTRL);
-	//writel(pmc_ctrl | PMC_CTRL_INTR_LOW, pmc + PMC_CTRL);
+	pmc_ctrl = readl(pmc + PMC_CTRL);
+	writel(pmc_ctrl | PMC_CTRL_INTR_LOW, pmc + PMC_CTRL);
 
 	err = i2c_register_board_info(4, adam_regulators, 1);
 	if (err < 0) 
