@@ -379,11 +379,12 @@ static struct fixed_voltage_config ldo_tps2051B_cfg
 
 /* FIXME: do we have rtc alarm irq? */
 static struct tps6586x_rtc_platform_data adam_rtc_data = {
-	.irq	= TEGRA_NR_IRQS + TPS6586X_INT_RTC_ALM1,
+	//.irq	= TEGRA_NR_IRQS + TPS6586X_INT_RTC_ALM1,
+	   .irq = -1,
         .start = {
-		.year = 2009,
-		.month = 1,
-		.day = 1,
+		.year = 2011,
+		.month = 12,
+		.day = 31,
         },
 	.cl_sel = TPS6586X_RTC_CL_SEL_1_5PF /* use lowest (external 20pF cap) */
 };
@@ -424,6 +425,7 @@ static struct tps6586x_platform_data tps_platform = {
 static struct i2c_board_info __initdata adam_regulators[] = {
 	{
 		I2C_BOARD_INFO("tps6586x", 0x34),
+		.irq =   INT_EXTERNAL_PMU,
 		.platform_data = &tps_platform,
 	},
 };
