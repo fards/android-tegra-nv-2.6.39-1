@@ -183,9 +183,9 @@ static struct regulator_consumer_supply tps658621_rtc_supply[] = {
 };
 
 /* unused */
-/*static struct regulator_consumer_supply tps658621_buck_supply[] = {
+static struct regulator_consumer_supply tps658621_buck_supply[] = {
 	REGULATOR_SUPPLY("pll_e", NULL),
-};*/
+};
 
 /* Super power voltage rail for the SOC : VDD SOC
 */
@@ -292,15 +292,15 @@ static struct regulator_init_data ldo9_data
 	= ADJ_REGULATOR_INIT(ldo9,1250, 3300, 1, 1); // 2850
 static struct regulator_init_data rtc_data  		 
 	= ADJ_REGULATOR_INIT(rtc, 1250, 3350, 1, 1); // 3300
-/*static struct regulator_init_data buck_data 
-	= ADJ_REGULATOR_INIT(buck,1250, 3350, 0, 0); // 3300*/
+static struct regulator_init_data buck_data 
+	= ADJ_REGULATOR_INIT(buck,1250, 3350, 0, 0); // 3300
 	
 static struct regulator_init_data soc_data  		 
 	= ADJ_REGULATOR_INIT(soc, 1250, 3300, 1, 1);
 static struct regulator_init_data ldo_tps74201_data  
 	= FIXED_REGULATOR_INIT(ldo_tps74201 , 1500, 0, 0 ); // 1500 (VDD1.5, enabled by PMU_GPIO[0] (0=enabled) - Turn it off as soon as we boot
 static struct regulator_init_data buck_tps62290_data 
-	= FIXED_REGULATOR_INIT(buck_tps62290, 1050, 1, 1 ); // 1050 (VDD1.05, AVDD_PEX ... enabled by PMU_GPIO[2] (1=enabled)
+	= FIXED_REGULATOR_INIT(buck_tps62290, 1050, 0, 0 ); // 1050 (VDD1.05, AVDD_PEX ... enabled by PMU_GPIO[2] (1=enabled)
 static struct regulator_init_data ldo_tps72012_data  
 	= FIXED_REGULATOR_INIT(ldo_tps72012 , 1200, 0, 0 ); // 1200 (VDD1.2, VCORE_WIFI ...) enabled by PMU_GPIO[1] (1=enabled)
 
@@ -339,7 +339,7 @@ static struct regulator_init_data vdd_aon_data =
 		.enabled_at_boot= _atboot,					\
 		.init_data		= &_data,					\
 	}
-//		.set_as_input_to_enable = _itoen,			
+
 /* The next 3 are fixed regulators controlled by PMU GPIOs */
 static struct fixed_voltage_config ldo_tps74201_cfg  
 	= FIXED_REGULATOR_CONFIG(ldo_tps74201  , 1500, PMU_GPIO0 , 0,0, 200000, 0, ldo_tps74201_data);
@@ -405,9 +405,9 @@ static struct tps6586x_subdev_info tps_devs[] = {
 	TPS_ADJ_REG(LDO_9, &ldo9_data),
 	//TPS_ADJ_REG(LDO_RTC, &rtc_data),
 	//TPS_ADJ_REG(LDO_SOC, &soc_data),
-	/*TPS_GPIO_FIX_REG(0, &ldo_tps74201_cfg),
+	TPS_GPIO_FIX_REG(0, &ldo_tps74201_cfg),
 	TPS_GPIO_FIX_REG(1, &buck_tps62290_cfg),
-	TPS_GPIO_FIX_REG(2, &ldo_tps72012_cfg),*/
+    TPS_GPIO_FIX_REG(2, &ldo_tps72012_cfg),
 	{
 		.id		= -1,
 		.name		= "tps6586x-rtc",
@@ -440,8 +440,8 @@ static struct i2c_board_info __initdata adam_regulators[] = {
 		}, 								\
 	} 	
 
-//static struct platform_device adam_ldo_tps2051B_reg_device = 
-//	GPIO_FIXED_REG(3,ldo_tps2051B_cfg); /* id is 3, because 0-2 are already used in the PMU gpio controlled fixed regulators */
+static struct platform_device adam_ldo_tps2051B_reg_device = 
+	GPIO_FIXED_REG(3,ldo_tps2051B_cfg); /* id is 3, because 0-2 are already used in the PMU gpio controlled fixed regulators */
 
 static struct platform_device adam_vdd_aon_reg_device = 
 {
@@ -551,30 +551,27 @@ struct platform_device tegra_rtc_device = {
 #endif
 
 static struct platform_device *adam_power_devices[] __initdata = {
-	//&adam_ldo_tps2051B_reg_device,
+	&adam_ldo_tps2051B_reg_device,
 	&adam_vdd_aon_reg_device,
-#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,38)	
 	&tegra_pmu_device,
-#else
-	&pmu_device,
-#endif
+
 	//&adam_nvec_mfd,
 	&tegra_rtc_device,
-	//&adam_bq24610_device,
+ //	&adam_bq24610_device,
 };
 
 /* Init power management unit of Tegra2 */
 int __init adam_power_register_devices(void)
 {
-	int err;
-	void __iomem *pmc = IO_ADDRESS(TEGRA_PMC_BASE);
-	u32 pmc_ctrl;
+  int err;
+//	void __iomem *pmc = IO_ADDRESS(TEGRA_PMC_BASE);
+//	u32 pmc_ctrl;
 
 	/* configure the power management controller to trigger PMU
 	 * interrupts when low
 	 */
-	pmc_ctrl = readl(pmc + PMC_CTRL);
-	writel(pmc_ctrl | PMC_CTRL_INTR_LOW, pmc + PMC_CTRL);
+//	pmc_ctrl = readl(pmc + PMC_CTRL);
+//	writel(pmc_ctrl | PMC_CTRL_INTR_LOW, pmc + PMC_CTRL);
 
 	err = i2c_register_board_info(4, adam_regulators, 1);
 	if (err < 0) 
