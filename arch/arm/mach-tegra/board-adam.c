@@ -152,6 +152,8 @@ static void __init tegra_adam_init(void)
 	tegra_common_init();
 #endif
 
+
+
 	/* force consoles to stay enabled across suspend/resume */
 	// console_suspend_enabled = 0;	
 
