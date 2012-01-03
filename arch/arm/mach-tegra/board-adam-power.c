@@ -56,23 +56,24 @@
 /* Core voltage rail : VDD_CORE -> SM0
 */
 static struct regulator_consumer_supply tps658621_sm0_supply[] = {
-	REGULATOR_SUPPLY("vdd_core", NULL)
+	REGULATOR_SUPPLY("vdd_core", NULL),
 };
 
 /* CPU voltage rail : VDD_CPU -> SM1
 */
 static struct regulator_consumer_supply tps658621_sm1_supply[] = {
-	REGULATOR_SUPPLY("vdd_cpu", NULL)
+	REGULATOR_SUPPLY("vdd_cpu", NULL),
 };
 
 /* unused */
 static struct regulator_consumer_supply tps658621_sm2_supply[] = {
-	REGULATOR_SUPPLY("vdd_sm2", NULL)
+	REGULATOR_SUPPLY("vdd_sm2", NULL),
 };
 
 /* PEX_CLK voltage rail : VDDIO_PEX_CLK -> LDO0
 */
 static struct regulator_consumer_supply tps658621_ldo0_supply[] = { /* VDDIO_PEX_CLK */
+	REGULATOR_SUPPLY("vdd_ldo0", NULL),
 	REGULATOR_SUPPLY("vdd_pex_clk_1", NULL),
 	REGULATOR_SUPPLY("vcore_wifi", NULL),
 };
@@ -87,6 +88,7 @@ static struct regulator_consumer_supply tps658621_ldo0_supply[] = { /* VDDIO_PEX
    PLLX voltage rail : AVDDPLLX -> LDO1
  */
 static struct regulator_consumer_supply tps658621_ldo1_supply[] = { /* 1V2 */
+	REGULATOR_SUPPLY("vdd_ldo1", NULL),
 	REGULATOR_SUPPLY("pll_a", NULL),
 	REGULATOR_SUPPLY("pll_m", NULL),
 	REGULATOR_SUPPLY("pll_p", NULL),
@@ -101,6 +103,7 @@ static struct regulator_consumer_supply tps658621_ldo1_supply[] = { /* 1V2 */
 	>VDD_RTC 
 */
 static struct regulator_consumer_supply tps658621_ldo2_supply[] = { 
+	REGULATOR_SUPPLY("vdd_ldo2", NULL),
 	REGULATOR_SUPPLY("vdd_rtc", NULL),
 	REGULATOR_SUPPLY("vdd_aon", NULL),
 };
@@ -114,6 +117,7 @@ static struct regulator_consumer_supply tps658621_ldo2_supply[] = {
    TMON pwer rail : TMON pwer rail -> LDO3 (VDD_3V3)
 */
 static struct regulator_consumer_supply tps658621_ldo3_supply[] = { /* 3V3 */
+	REGULATOR_SUPPLY("vdd_ldo3", NULL),
 	REGULATOR_SUPPLY("avdd_usb_pll", NULL),
 	REGULATOR_SUPPLY("avdd_usb", NULL),
 	REGULATOR_SUPPLY("vddio_nand_3v3", NULL), /* AON? */
@@ -138,6 +142,7 @@ static struct regulator_consumer_supply tps658621_ldo3_supply[] = { /* 3V3 */
    Wlan : VDDIO_WLAN (AON:VDD_1V8)
 */
 static struct regulator_consumer_supply tps658621_ldo4_supply[] = { /* VDD IO VI */
+	REGULATOR_SUPPLY("vdd_ldo4", NULL),
 	REGULATOR_SUPPLY("avdd_osc", NULL),       /* AVDD_OSC */
 	REGULATOR_SUPPLY("vddio_sys", NULL),
 	REGULATOR_SUPPLY("vddio_lcd", NULL),      /* AON? */
@@ -153,13 +158,14 @@ static struct regulator_consumer_supply tps658621_ldo4_supply[] = { /* VDD IO VI
 
 /*unused*/
 static struct regulator_consumer_supply tps658621_ldo5_supply[] = {
-	REGULATOR_SUPPLY("vdd ld5", NULL)
+	REGULATOR_SUPPLY("vdd ldo5", NULL)
 };
 
 /* VDAC voltage rail : AVDD_VDAC -> LDO6
    tvdac rail : VDDIO_VDAC,AVDD_VDAC
  */
 static struct regulator_consumer_supply tps658621_ldo6_supply[] = {
+     REGULATOR_SUPPLY("vdd_ldo6", NULL),
 	//REGULATOR_SUPPLY("vddio vdac", NULL),
 	REGULATOR_SUPPLY("avdd_vdac", NULL)
 };
@@ -167,18 +173,21 @@ static struct regulator_consumer_supply tps658621_ldo6_supply[] = {
 /* HDMI voltage rail : AVDD_HDMI -> LDO7
 */
 static struct regulator_consumer_supply tps658621_ldo7_supply[] = {
+	REGULATOR_SUPPLY("vdd_ldo7", NULL),
 	REGULATOR_SUPPLY("avdd_hdmi", NULL)
 };
 
 /* PLLHD voltage rail (HDMI) : AVDD_HDMI_PLL -> LDO8
 */
 static struct regulator_consumer_supply tps658621_ldo8_supply[] = { /* AVDD_HDMI_PLL */
+	REGULATOR_SUPPLY("vdd_ldo8", NULL),
 	REGULATOR_SUPPLY("avdd_hdmi_pll", NULL),  //PLLHD 
 };
 
 /* DDR_RX voltage rail : VDDIO_RX_DDR(2.7-3.3) -> LDO9
 */
 static struct regulator_consumer_supply tps658621_ldo9_supply[] = {
+	REGULATOR_SUPPLY("vdd_ldo9", NULL),
 	REGULATOR_SUPPLY("vdd_ddr_rx", NULL),
 	REGULATOR_SUPPLY("vddio_vi", NULL),
 };
@@ -426,8 +435,8 @@ static struct tps6586x_subdev_info tps_devs[] = {
 	TPS_ADJ_REG(LDO_7, &ldo7_data),
 	TPS_ADJ_REG(LDO_8, &ldo8_data),
 	TPS_ADJ_REG(LDO_9, &ldo9_data),
-	//TPS_ADJ_REG(LDO_RTC, &rtc_data),
-	//TPS_ADJ_REG(LDO_SOC, &soc_data),
+	TPS_ADJ_REG(LDO_RTC, &rtc_data),
+//	TPS_ADJ_REG(LDO_SOC, &soc_data),
 	/*TPS_GPIO_FIX_REG(0, &ldo_tps74201_cfg),
 	TPS_GPIO_FIX_REG(1, &buck_tps62290_cfg),
 	TPS_GPIO_FIX_REG(2, &ldo_tps72012_cfg),*/
@@ -448,8 +457,8 @@ static struct tps6586x_platform_data tps_platform = {
 static struct i2c_board_info __initdata adam_regulators[] = {
 	{
 		I2C_BOARD_INFO("tps6586x", 0x34),
-		.irq =   INT_EXTERNAL_PMU,
-		.platform_data = &tps_platform,
+//		.irq		= INT_EXTERNAL_PMU,
+		.platform_data	= &tps_platform,
 	},
 };
 
@@ -526,8 +535,8 @@ static struct tegra_suspend_platform_data adam_suspend_data = {
 	 * Check power on time and crystal oscillator start time
 	 * for appropriate settings.
 	 */
-	.cpu_timer	= 2000,
-	.cpu_off_timer	= 100,
+	.cpu_timer	= 5000,
+	.cpu_off_timer	= 5000,
 	.suspend_mode	= TEGRA_SUSPEND_LP1,
 	.core_timer	= 0x7e7e,
 	.core_off_timer = 0xf,
@@ -633,7 +642,7 @@ int __init adam_power_register_devices(void)
     
 
 	/* signal that power regulators have fully specified constraints */
-	regulator_has_full_constraints();
+//	regulator_has_full_constraints();
 	
 	/* register all pm devices - This must come AFTER the registration of the TPS i2c interfase,
 	   as we need the GPIO definitions exported by that driver */
