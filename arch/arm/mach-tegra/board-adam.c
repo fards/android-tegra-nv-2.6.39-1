@@ -141,7 +141,7 @@ static struct tegra_suspend_platform_data adam_suspend = {
     .corereq_high = false,
 	.sysclkreq_high = true,
 	//.separate_req = true,
-	.suspend_mode = TEGRA_SUSPEND_LP1,
+	.suspend_mode = TEGRA_SUSPEND_LP0,
 };
 
 static void __init tegra_adam_init(void)
@@ -155,7 +155,7 @@ static void __init tegra_adam_init(void)
 
 
 	/* force consoles to stay enabled across suspend/resume */
-	// console_suspend_enabled = 0;	
+	 console_suspend_enabled = 0;	
 
 	/* Init the suspend information */
 	tegra_init_suspend(&adam_suspend);

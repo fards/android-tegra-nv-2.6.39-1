@@ -77,7 +77,7 @@ static __initdata struct tegra_clk_init_table adam_clk_init_table[] = {
 	{ "pll_p",		"clk_m",		216000000,	true},		/* must be always on */
 	{ "pll_p_out1",	"pll_p",		 28800000,	true},		/* must be always on - audio clocks ...*/
 //	{ "pll_p_out2",	"pll_p",		 48000000,	true},		/* must be always on - usb perhaps ? unused ?*/
-	{ "pll_p_out2",	"pll_p",		 108000000,	true},		/* must be always on - usb perhaps ? unused ?*/
+    { "pll_p_out2", "pll_p", 216000000, true}, /* must be always on - usb perhaps ? unused ?*/
 	{ "pll_p_out3",	"pll_p",		 72000000,	true},		/* must be always on - i2c, camera */
 	{ "pll_p_out4",	"pll_p",		 26000000,	true},		/* must be always on - USB ulpi */
 	
@@ -114,9 +114,9 @@ static __initdata struct tegra_clk_init_table adam_clk_init_table[] = {
 #endif
 
 	/* pll_d and pll_d_out0 are clock sources for HDMI output */
-    { "pll_d", "clk_m", 594000000, true}, /* hdmi clock */
+    { "pll_d", "clk_m", 5000000, true}, /* hdmi clock */
 //	{ "pll_d_out0", "pll_d",    	  5000000,  true},		/* hdmi clock */
-    { "pll_d_out0", "pll_d", 300000000 , true}, /* hdmi clock */
+    { "pll_d_out0", "pll_d", 2500000 , true}, /* hdmi clock */
 
 	{ "clk_d",		"clk_m",		 24000000,	true},
 
@@ -124,9 +124,9 @@ static __initdata struct tegra_clk_init_table adam_clk_init_table[] = {
 	{ "pll_u",  	"clk_m",    	480000000,  false},		/* USB ulpi clock */
 
         /* pll_x */
-        { "pll_x",      "clk_m",        760000000,  true},              /* */
-        { "cclk",               "pll_x",                760000000,  true},
-        { "cpu",                "cclk",                 760000000,  true},
+    { "pll_x", "clk_m", 1000000000, true}, /* */
+    { "cclk", "pll_x", 1000000000, true},
+    { "cpu", "cclk", 1000000000, true},
 	
 	/* Peripherals - Always on */
 	{ "csite",		"pll_p",		144000000,	true},		/* csite - coresite */ /* always on */
@@ -275,7 +275,7 @@ static __initdata struct tegra_clk_init_table adam_clk_init_table[] = {
 	{ "usb2",		"clk_m",		 12000000,	false},		/* tegra_ehci.1 */
 	{ "usb3",		"clk_m",		 12000000,	false},		/* tegra_ehci.2 */
 	
-	{ "pwm",    	"clk_m",   		 12000000,  true},		/* tegra-pwm.0 tegra-pwm.1 tegra-pwm.2 tegra-pwm.3*/
+	{ "pwm",    	"clk_m",   		  12000000,  true},		/* tegra-pwm.0 tegra-pwm.1 tegra-pwm.2 tegra-pwm.3*/
 	
 	{ "kbc",		"clk_32k",			32768,	false},		/* tegra-kbc */
 	{ "blink",		"clk_32k",			32768,	false},		/* used for bluetooth */
