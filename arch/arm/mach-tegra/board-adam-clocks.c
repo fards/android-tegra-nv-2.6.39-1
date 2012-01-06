@@ -114,7 +114,7 @@ static __initdata struct tegra_clk_init_table adam_clk_init_table[] = {
 #endif
 
 	/* pll_d and pll_d_out0 are clock sources for HDMI output */
-    { "pll_d", "clk_m", 5000000, true}, /* hdmi clock */
+    { "pll_d", "clk_m", 594000000, true}, /* hdmi clock */
 //	{ "pll_d_out0", "pll_d",    	  5000000,  true},		/* hdmi clock */
     { "pll_d_out0", "pll_d", 2500000 , true}, /* hdmi clock */
 
