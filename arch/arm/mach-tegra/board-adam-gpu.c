@@ -167,7 +167,7 @@ static int adam_hdmi_disable(void)
 /* If using 1024x600 panel (Shuttle default panel) */
 
 /* Frame buffer size assuming 16bpp color */
-#define ADAM_FB_SIZE TEGRA_ROUND_ALLOC(1024*600*(16/8)*ADAM_FB_PAGES)
+#define ADAM_FB_SIZE TEGRA_ROUND_ALLOC(1024*600*(32/8)*ADAM_FB_PAGES)
 
 static struct tegra_dc_mode adam_panel_modes[] = {
 	{
@@ -225,7 +225,7 @@ static struct tegra_dc_out adam_disp1_out = {
         /* Enable dithering. Tegra also supports error
                diffusion, but when the active region is less
                than 640 pixels wide. */
-       .dither         = TEGRA_DC_ORDERED_DITHER,
+   //    .dither         = TEGRA_DC_ORDERED_DITHER,
 
 	.height 	= 136, /* mm */
 	.width 		= 217, /* mm */

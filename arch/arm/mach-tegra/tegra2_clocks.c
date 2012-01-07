@@ -31,7 +31,6 @@
 #include <linux/cpufreq.h>
 
 #include <mach/iomap.h>
-#include <mach/suspend.h>
 #include <mach/pinmux.h>
 
 #include "clock.h"
@@ -2658,11 +2657,11 @@ unsigned long tegra_emc_to_cpu_ratio(unsigned long cpu_rate)
 }
 #endif
 
-#ifdef CONFIG_PM
+#ifdef CONFIG_PM_SLEEP
 static u32 clk_rst_suspend[RST_DEVICES_NUM + CLK_OUT_ENB_NUM +
 			   PERIPH_CLK_SOURCE_NUM + 22];
 
-void tegra_clk_suspend(void)
+static int tegra_clk_suspend(void)
 {
 	unsigned long off, i;
 	u32 *ctx = clk_rst_suspend;
@@ -2711,9 +2710,11 @@ void tegra_clk_suspend(void)
 	*ctx++ = clk_readl(CLK_MASK_ARM);
 
 	BUG_ON(ctx - clk_rst_suspend != ARRAY_SIZE(clk_rst_suspend));
+
+	return 0;
 }
 
-void tegra_clk_resume(void)
+static void tegra_clk_resume(void)
 {
 	unsigned long off, i;
 	const u32 *ctx = clk_rst_suspend;
@@ -2775,6 +2776,10 @@ void tegra_clk_resume(void)
 	clk_writel(*ctx++, MISC_CLK_ENB);
 	clk_writel(*ctx++, CLK_MASK_ARM);
 }
+
+#else
+#define tegra_clk_suspend NULL
+#define tegra_clk_resume NULL
 #endif
 
 static struct syscore_ops tegra_clk_syscore_ops = {
