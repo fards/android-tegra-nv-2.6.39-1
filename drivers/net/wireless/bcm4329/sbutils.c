@@ -130,6 +130,7 @@ sb_write_sbreg(si_info_t *sii, volatile uint32 *sbr, uint32 v)
 		OSL_PCMCIA_WRITE_ATTR(sii->osh, MEM_SEG, &tmp, 1);
 		INTR_RESTORE(sii, intr_val);
 	}
+	(void)dummy;
 }
 
 uint
@@ -794,6 +795,8 @@ disable:
 	/* leave reset and reject asserted */
 	W_SBREG(sii, &sb->sbtmstatelow, ((bits << SBTML_SICF_SHIFT) | SBTML_REJ | SBTML_RESET));
 	OSL_DELAY(1);
+
+	(void)dummy;
 }
 
 /* reset and re-enable a core
@@ -845,6 +848,8 @@ sb_core_reset(si_t *sih, uint32 bits, uint32 resetbits)
 	W_SBREG(sii, &sb->sbtmstatelow, ((bits | SICF_CLOCK_EN) << SBTML_SICF_SHIFT));
 	dummy = R_SBREG(sii, &sb->sbtmstatelow);
 	OSL_DELAY(1);
+
+	(void)dummy;
 }
 
 void

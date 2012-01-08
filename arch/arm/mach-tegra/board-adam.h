@@ -55,9 +55,9 @@
 #define ADAM_MEM_SIZE 		SZ_512M			/* Total memory */
 #define ADAM_MEM_BANKS		1
 
-//#define ADAM_GPU_MEM_SIZE 		SZ_128M		/* Memory reserved for GPU */
+#define ADAM_GPU_MEM_SIZE 		SZ_128M		/* Memory reserved for GPU */
 //#define ADAM_GPU_MEM_SIZE 	SZ_64M			/* Memory reserved for GPU */
-#define ADAM_GPU_MEM_SIZE    (45*SZ_2M)			/* Memory reserved for GPU */
+//#define ADAM_GPU_MEM_SIZE    (45*SZ_2M)			/* Memory reserved for GPU */
 
 #define ADAM_FB1_MEM_SIZE 	SZ_8M			/* Memory reserved for Framebuffer 1: LCD */
 #define ADAM_FB2_MEM_SIZE 	SZ_8M			/* Memory reserved for Framebuffer 2: HDMI out */

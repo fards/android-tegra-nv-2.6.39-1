@@ -465,6 +465,7 @@ dev_iw_iovar_getbuf(
 	ASSERT(iolen);
 
 	return (dev_wlc_ioctl(dev, WLC_GET_VAR, bufptr, buflen));
+	(void)iolen;
 }
 #endif 
 
@@ -1889,9 +1890,6 @@ static int iwpriv_set_ap_config(struct net_device *dev,
 		wrqu->data.pointer, wrqu->data.length));
 
 	if (wrqu->data.length != 0) {
-
-		char *str_ptr;
-
 		if (!(extra = kmalloc(wrqu->data.length+1, GFP_KERNEL)))
 			return -ENOMEM;
 
@@ -1904,8 +1902,6 @@ static int iwpriv_set_ap_config(struct net_device *dev,
 		WL_SOFTAP((" Got str param in iw_point:\n %s\n", extra));
 
 		memset(ap_cfg, 0, sizeof(struct ap_profile));
-
-		str_ptr = extra;
 
 		if ((res = init_ap_profile_from_string(extra, ap_cfg)) < 0) {
 			WL_ERROR(("%s failed to parse %d\n", __FUNCTION__, res));
@@ -5186,6 +5182,7 @@ wl_iw_set_pmksa(
 			for (j = 0; j < WPA2_PMKID_LEN; j++)
 				WL_WSEC(("%02x ", pmkid_list.pmkids.pmkid[k].PMKID[j]));
 			WL_WSEC(("\n"));
+			(void)k;
 		}
 	}
 	WL_WSEC(("PRINTING pmkid LIST - No of elements %d, ret = %d\n", pmkid_list.pmkids.npmkid, ret));
@@ -8044,10 +8041,12 @@ wl_iw_event(struct net_device *dev, wl_event_msg_t *e, void* data)
 
 	case WLC_E_PFN_NET_FOUND:
 	{
+#ifdef DHD_DEBUG
 		wlc_ssid_t	* ssid;
 		ssid = (wlc_ssid_t *)data;
 		WL_TRACE(("%s Event WLC_E_PFN_NET_FOUND, send %s up : find %s len=%d\n", \
 			__FUNCTION__, PNO_EVENT_UP, ssid->SSID, ssid->SSID_len));
+#endif
 		net_os_wake_lock_timeout_enable(dev);
 		cmd = IWEVCUSTOM;
 		memset(&wrqu, 0, sizeof(wrqu));

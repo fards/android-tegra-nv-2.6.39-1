@@ -405,7 +405,7 @@ sdioh_iovar_op(sdioh_info_t *si, const char *name,
 	int bcmerror = 0;
 	int val_size;
 	int32 int_val = 0;
-	bool bool_val;
+/*	bool bool_val;*/
 	uint32 actionid;
 
 	ASSERT(name);
@@ -441,7 +441,7 @@ sdioh_iovar_op(sdioh_info_t *si, const char *name,
 	if (plen >= (int)sizeof(int_val))
 		bcopy(params, &int_val, sizeof(int_val));
 
-	bool_val = (int_val != 0) ? TRUE : FALSE;
+/*	bool_val = (int_val != 0) ? TRUE : FALSE;*/
 
 	actionid = set ? IOV_SVAL(vi->varid) : IOV_GVAL(vi->varid);
 	switch (actionid) {
@@ -1168,7 +1168,7 @@ static void IRQHandlerF2(struct sdio_func *func)
 
 	sd = gInstance->sd;
 
-	ASSERT(sd != NULL);
+	ASSERT(sd != NULL); (void)sd;
 }
 #endif /* !defined(OOB_INTR_ONLY) */
 

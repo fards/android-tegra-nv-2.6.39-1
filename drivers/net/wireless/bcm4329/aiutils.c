@@ -151,7 +151,10 @@ ai_scan(si_t *sih, void *regs, uint devid)
 	SI_MSG(("ai_scan: regs = 0x%p, erombase = 0x%08x, eromptr = 0x%08x, eromlim = 0x%08x\n",
 	        regs, erombase, eromptr, eromlim));
 	while (eromptr < eromlim) {
-		uint32 cia, cib, base, cid, mfg, crev, nmw, nsw, nmp, nsp;
+		uint32 cia, cib, cid, mfg, nmw, nsw, nmp, nsp;
+#ifdef HAS_SI_MSG
+		uint32 base, crev;
+#endif
 		uint32 mpd, asd, addrl, addrh, sizel, sizeh;
 		uint i, j, idx;
 		bool br;
@@ -164,7 +167,9 @@ ai_scan(si_t *sih, void *regs, uint devid)
 			SI_MSG(("Found END of erom after %d cores\n", sii->numcores));
 			return;
 		}
+#ifdef HAS_SI_MSG
 		base = eromptr - sizeof(uint32);
+#endif
 		cib = get_erom_ent(sih, &eromptr, 0, 0);
 
 		if ((cib & ER_TAG) != ER_CI) {
@@ -174,7 +179,9 @@ ai_scan(si_t *sih, void *regs, uint devid)
 
 		cid = (cia & CIA_CID_MASK) >> CIA_CID_SHIFT;
 		mfg = (cia & CIA_MFG_MASK) >> CIA_MFG_SHIFT;
+#ifdef HAS_SI_MSG
 		crev = (cib & CIB_REV_MASK) >> CIB_REV_SHIFT;
+#endif
 		nmw = (cib & CIB_NMW_MASK) >> CIB_NMW_SHIFT;
 		nsw = (cib & CIB_NSW_MASK) >> CIB_NSW_SHIFT;
 		nmp = (cib & CIB_NMP_MASK) >> CIB_NMP_SHIFT;
@@ -586,6 +593,7 @@ ai_core_disable(si_t *sih, uint32 bits)
 
 	W_REG(sii->osh, &ai->resetctrl, AIRC_RESET);
 	OSL_DELAY(1);
+	(void)dummy;
 }
 
 /* reset and re-enable a core
@@ -620,6 +628,7 @@ ai_core_reset(si_t *sih, uint32 bits, uint32 resetbits)
 	W_REG(sii->osh, &ai->ioctrl, (bits | SICF_CLOCK_EN));
 	dummy = R_REG(sii->osh, &ai->ioctrl);
 	OSL_DELAY(1);
+	(void)dummy;
 }
 
 

@@ -114,8 +114,8 @@ static __initdata struct tegra_clk_init_table adam_clk_init_table[] = {
 #endif
 
 	/* pll_d and pll_d_out0 are clock sources for HDMI output */
-    { "pll_d", "clk_m", 594000000, true}, /* hdmi clock */
-//	{ "pll_d_out0", "pll_d",    	  5000000,  true},		/* hdmi clock */
+	{ "pll_d",		"clk_m",		  5000000,	true},		/* hdmi clock */
+//	{ "pll_d_out0", "pll_d",    	 5000000,  true},		/* hdmi clock */
     { "pll_d_out0", "pll_d", 2500000 , true}, /* hdmi clock */
 
 	{ "clk_d",		"clk_m",		 24000000,	true},
@@ -124,9 +124,9 @@ static __initdata struct tegra_clk_init_table adam_clk_init_table[] = {
 	{ "pll_u",  	"clk_m",    	480000000,  false},		/* USB ulpi clock */
 
         /* pll_x */
-    { "pll_x", "clk_m", 1000000000, true}, /* */
-    { "cclk", "pll_x", 1000000000, true},
-    { "cpu", "cclk", 1000000000, true},
+    { "pll_x", "clk_m", 1200000000, true}, /* */
+    { "cclk", "pll_x", 1200000000, true},
+    { "cpu", "cclk", 1200000000, true},
 	
 	/* Peripherals - Always on */
 	{ "csite",		"pll_p",		144000000,	true},		/* csite - coresite */ /* always on */
@@ -229,7 +229,7 @@ static __initdata struct tegra_clk_init_table adam_clk_init_table[] = {
 	{ "disp2",  	"pll_p",    	216000000, 	false},		/* tegradc.1 */	
 	
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,38)	
-	{ "dsi",		"pll_d",		  5000000,	false},		/* tegra_dc.0, tegra_dc.1 */
+	{ "dsi",		"pll_d",		  2500000,	false},		/* tegra_dc.0, tegra_dc.1 */
 #else
 	{ "dsi",		"pll_d_out0",	  2500000,	false},		/* tegra_dc.0, tegra_dc.1 - bug on kernel 2.6.36*/
 #endif
@@ -275,7 +275,7 @@ static __initdata struct tegra_clk_init_table adam_clk_init_table[] = {
 	{ "usb2",		"clk_m",		 12000000,	false},		/* tegra_ehci.1 */
 	{ "usb3",		"clk_m",		 12000000,	false},		/* tegra_ehci.2 */
 	
-	{ "pwm",    	"clk_m",   		  12000000,  true},		/* tegra-pwm.0 tegra-pwm.1 tegra-pwm.2 tegra-pwm.3*/
+	{ "pwm",    	"clk_m",   		 12000000,  false},		/* tegra-pwm.0 tegra-pwm.1 tegra-pwm.2 tegra-pwm.3*/
 	
 	{ "kbc",		"clk_32k",			32768,	false},		/* tegra-kbc */
 	{ "blink",		"clk_32k",			32768,	false},		/* used for bluetooth */

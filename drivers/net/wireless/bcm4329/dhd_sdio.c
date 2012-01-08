@@ -530,7 +530,8 @@ dhdsdio_htclk(dhd_bus_t *bus, bool on, bool pendok)
 		    ((bus->sih->buscoretype == PCMCIA_CORE_ID) && (bus->sih->buscorerev == 9))) {
 			uint32 dummy, retries;
 			R_SDREG(dummy, &bus->regs->clockctlstatus, retries);
-		}
+	      (void)dummy;
+		  	}
 
 		/* Check current status */
 		clkctl = bcmsdh_cfg_read(sdh, SDIO_FUNC_1, SBSDIO_FUNC1_CHIPCLKCSR, &err);
@@ -5671,6 +5672,8 @@ _dhdsdio_download_firmware(struct dhd_bus *bus)
 			dlok = TRUE;
 		}
 	}
+	#else
+	(void)embed;
 #endif
 	if (!dlok) {
 		DHD_ERROR(("%s: dongle image download failed\n", __FUNCTION__));

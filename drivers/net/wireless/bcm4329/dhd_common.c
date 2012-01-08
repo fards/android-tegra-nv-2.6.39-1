@@ -520,7 +520,7 @@ dhd_ioctl(dhd_pub_t *dhd_pub, dhd_ioctl_t *ioc, void *buf, uint buflen)
 }
 
 
-#ifdef SHOW_EVENTS
+#if defined(SHOW_EVENTS) && defined(DHD_DEBUG)
 static void
 wl_show_host_event(wl_event_msg_t *event, void *event_data)
 {
@@ -818,8 +818,11 @@ wl_host_event(struct dhd_info *dhd, int *ifidx, void *pktdata,
 	/* check whether packet is a BRCM event pkt */
 	bcm_event_t *pvt_data = (bcm_event_t *)pktdata;
 	char *event_data;
-	uint32 type, status;
+	uint32 type;
+#ifdef DHD_DEBUG
+	uint32 status;
 	uint16 flags;
+#endif
 	int evlen;
 
 	if (bcmp(BRCM_OUI, &pvt_data->bcm_hdr.oui[0], DOT11_OUI_LEN)) {
@@ -840,8 +843,10 @@ wl_host_event(struct dhd_info *dhd, int *ifidx, void *pktdata,
 	memcpy(event, &pvt_data->event, sizeof(wl_event_msg_t));
 
 	type = ntoh32_ua((void *)&event->event_type);
+#ifdef DHD_DEBUG
 	flags = ntoh16_ua((void *)&event->flags);
 	status = ntoh32_ua((void *)&event->status);
+#endif
 	evlen = ntoh32_ua((void *)&event->datalen) + sizeof(bcm_event_t);
 
 	switch (type) {
@@ -905,7 +910,7 @@ wl_host_event(struct dhd_info *dhd, int *ifidx, void *pktdata,
 			break;
 	}
 
-#ifdef SHOW_EVENTS
+#if defined(SHOW_EVENTS) && defined(DHD_DEBUG)
 	wl_show_host_event(event, event_data);
 #endif /* SHOW_EVENTS */
 
@@ -1279,14 +1284,13 @@ int dhd_arp_get_arp_hostip_table(dhd_pub_t *dhd, void *buf, int buflen)
 {
 #ifdef ARP_OFFLOAD_SUPPORT
 	int retcode;
-	int iov_len = 0;
 
 	if (!buf)
 		return -1;
 
 	dhd_os_proto_block(dhd);
 
-	iov_len = bcm_mkiovar("arp_hostip", 0, 0, buf, buflen);
+	bcm_mkiovar("arp_hostip", 0, 0, buf, buflen);
 	retcode = dhdcdc_query_ioctl(dhd, 0, WLC_GET_VAR, buf, buflen);
 
 	dhd_os_proto_unblock(dhd);
