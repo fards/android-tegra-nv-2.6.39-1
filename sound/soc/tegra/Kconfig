@@ -135,4 +135,3 @@ config SND_SOC_TEGRA_ALC5623
           Say Y or M here if you want to add support for SoC audio on Tegra
           boards using the ALC5623 codec. Currently, only supported board is
           Adam.
-

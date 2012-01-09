@@ -29,4 +29,3 @@ obj-$(CONFIG_SND_SOC_TEGRA_MAX98088) += snd-soc-tegra-max98088.o
 obj-$(CONFIG_SND_SOC_TEGRA_ALC5623) += snd-soc-tegra-alc5623.o
 
 EXTRA_CFLAGS += -DDEBUG
-
