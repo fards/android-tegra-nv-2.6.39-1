@@ -184,8 +184,9 @@ int snd_pcm_hw_refine(struct snd_pcm_substream *substream,
 
 	for (k = SNDRV_PCM_HW_PARAM_FIRST_MASK; k <= SNDRV_PCM_HW_PARAM_LAST_MASK; k++) {
 		m = hw_param_mask(params, k);
-		if (snd_mask_empty(m))
+		if (snd_mask_empty(m)){
 			return -EINVAL;
+		}
 		if (!(params->rmask & (1 << k)))
 			continue;
 #ifdef RULES_DEBUG
@@ -198,14 +199,16 @@ int snd_pcm_hw_refine(struct snd_pcm_substream *substream,
 #endif
 		if (changed)
 			params->cmask |= 1 << k;
-		if (changed < 0)
+		if (changed < 0){
 			return changed;
+		}
 	}
 
 	for (k = SNDRV_PCM_HW_PARAM_FIRST_INTERVAL; k <= SNDRV_PCM_HW_PARAM_LAST_INTERVAL; k++) {
 		i = hw_param_interval(params, k);
-		if (snd_interval_empty(i))
+		if (snd_interval_empty(i)){
 			return -EINVAL;
+		}
 		if (!(params->rmask & (1 << k)))
 			continue;
 #ifdef RULES_DEBUG
@@ -229,8 +232,9 @@ int snd_pcm_hw_refine(struct snd_pcm_substream *substream,
 #endif
 		if (changed)
 			params->cmask |= 1 << k;
-		if (changed < 0)
+		if (changed < 0){
 			return changed;
+		}
 	}
 
 	for (k = 0; k < constrs->rules_num; k++)
@@ -294,8 +298,9 @@ int snd_pcm_hw_refine(struct snd_pcm_substream *substream,
 				vstamps[r->var] = stamp;
 				again = 1;
 			}
-			if (changed < 0)
+			if (changed < 0){
 				return changed;
+			}
 			stamp++;
 		}
 	} while (again);
@@ -476,13 +481,15 @@ static int snd_pcm_hw_params_user(struct snd_pcm_substream *substream,
 	int err;
 
 	params = memdup_user(_params, sizeof(*params));
-	if (IS_ERR(params))
+	if (IS_ERR(params)){
 		return PTR_ERR(params);
+	}
 
 	err = snd_pcm_hw_params(substream, params);
 	if (copy_to_user(_params, params, sizeof(*params))) {
-		if (!err)
+		if (!err){
 			err = -EFAULT;
+		}
 	}
 
 	kfree(params);
