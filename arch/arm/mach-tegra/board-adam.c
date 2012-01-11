@@ -224,10 +224,10 @@ static void __init tegra_adam_init(void)
 //	adam_wlan_pm_register_devices();
 	
 	/* Register gps powermanagement devices */
-	adam_gps_pm_register_devices();
+	//adam_gps_pm_register_devices();
 
 	/* Register gsm powermanagement devices */
-	adam_gsm_pm_register_devices();
+	//adam_gsm_pm_register_devices();
 	
 	/* Register Bluetooth powermanagement devices */
 //	adam_bt_pm_register_devices();
@@ -239,8 +239,8 @@ static void __init tegra_adam_init(void)
 	/* Register NAND flash devices */
 	adam_nand_register_devices();
 	
-	adam_gps_mag_init();
-	adam_gps_mag_poweron();
+	//adam_gps_mag_init();
+	//adam_gps_mag_poweron();
 #if 0
 	/* Finally, init the external memory controller and memory frequency scaling
    	   NB: This is not working on ADAM. And seems there is no point in fixing it,

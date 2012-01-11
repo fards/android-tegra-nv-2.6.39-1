@@ -113,10 +113,11 @@ static __initdata struct tegra_clk_init_table adam_clk_init_table[] = {
 #       endif
 #endif
 
+    { "pll_e", "clk_m", 1200000000, true},  /*unknown*/
 	/* pll_d and pll_d_out0 are clock sources for HDMI output */
 	{ "pll_d",		"clk_m",		  5000000,	true},		/* hdmi clock */
 //	{ "pll_d_out0", "pll_d",    	 5000000,  true},		/* hdmi clock */
-    { "pll_d_out0", "pll_d", 2500000 , true}, /* hdmi clock */
+    { "pll_d_out0", "pll_d", 297000000 , true}, /* hdmi clock */
 
 	{ "clk_d",		"clk_m",		 24000000,	true},
 
@@ -132,7 +133,7 @@ static __initdata struct tegra_clk_init_table adam_clk_init_table[] = {
 	{ "csite",		"pll_p",		144000000,	true},		/* csite - coresite */ /* always on */
 	{ "timer",		"clk_m",		 12000000,	true},		/* timer */ /* always on - no init req */
 	{ "rtc",		"clk_32k",			32768,	true},		/* rtc-tegra : must be always on */
-	{ "kfuse",		"clk_m",		 12000000,	true},		/* kfuse-tegra */ /* always on - no init req */
+    { "kfuse", "clk_m", 12000000, false}, /* kfuse-tegra */ /* always on - no init req */
 
 	/* Peripherals - Turned on demand */
 //	{ "3d",     	"pll_c",    	300000000,  false},		/* tegra_grhost, gr3d */
@@ -140,7 +141,7 @@ static __initdata struct tegra_clk_init_table adam_clk_init_table[] = {
 	{ "2d",     	"pll_c",    	300000000,  false},		/* tegra_grhost, gr2d */
 	{ "epp",    	"pll_c",    	300000000, 	false}, 	/* tegra_grhost */	
 //	{ "mpe",		"pll_c",		300000000,	false},		/* tegra_grhost */	
-	{ "mpe",		"pll_c",		266400000,	false},		/* tegra_grhost */	
+    { "mpe", "pll_c", 300000000, false}, /* tegra_grhost */
 //	{ "host1x",		"pll_p",		144000000,	false},		/* tegra_grhost */
 	{ "host1x",		"pll_p",		108000000,	false},		/* tegra_grhost */
 	
@@ -219,7 +220,7 @@ static __initdata struct tegra_clk_init_table adam_clk_init_table[] = {
     { "dvc", "clk_m", 3000000, false}, /* tegra-i2c.3 */
 
 	{ "apbdma",		"pclk",			108000000,	true}, 	/* tegra-dma */
-	{ "uarta",		"pll_p",		216000000,	false},		/* tegra_uart.0 uart.0 */
+	{ "uarta",		"pll_p",		216000000,	true},		/* tegra_uart.0 uart.0 */
 	{ "uartb", 	 	"pll_p",  	  	216000000,	false},		/* tegra_uart.1 uart.1 */
 	{ "uartc",		"pll_p",		216000000,	false},		/* tegra_uart.2 uart.2 */
 	{ "uartd",		"pll_p",		216000000,	false},		/* tegra_uart.3 uart.3 */
@@ -228,11 +229,11 @@ static __initdata struct tegra_clk_init_table adam_clk_init_table[] = {
 	{ "disp1",  	"pll_p",    	216000000, 	false},		/* tegradc.0 */
 	{ "disp2",  	"pll_p",    	216000000, 	false},		/* tegradc.1 */	
 	
-#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,38)	
-	{ "dsi",		"pll_d",		  2500000,	false},		/* tegra_dc.0, tegra_dc.1 */
-#else
+//#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,38)	
+//	{ "dsi",		"pll_d",		  5000000,	false},		/* tegra_dc.0, tegra_dc.1 */
+//#else
 	{ "dsi",		"pll_d_out0",	  2500000,	false},		/* tegra_dc.0, tegra_dc.1 - bug on kernel 2.6.36*/
-#endif
+//#endif
 	{ "hdmi",		"clk_m",		 12000000,	false},		/* tegra_dc.0, tegra_dc.1 */
 	
 	{ "spi",		"clk_m",		 12000000,	false},
@@ -250,10 +251,10 @@ static __initdata struct tegra_clk_init_table adam_clk_init_table[] = {
 		
 	{ "vfir",		"clk_m",		 12000000,	false},
 
-	{ "sdmmc1",		"pll_p",		 48000000,	false},		/* sdhci-tegra.0 */
-	{ "sdmmc2",		"pll_p",		 48000000,	false},		/* sdhci-tegra.1 */
-	{ "sdmmc3",		"pll_p",		 48000000,	false},		/* sdhci-tegra.2 */
-	{ "sdmmc4",		"pll_p",		 48000000,	false},		/* sdhci-tegra.3 */
+    { "sdmmc1", "pll_p", 24000000, true}, /* sdhci-tegra.0 */
+    { "sdmmc2", "pll_m", 12000000, false}, /* sdhci-tegra.1 */
+    { "sdmmc3", "pll_p", 48000000, false}, /* sdhci-tegra.2 */
+    { "sdmmc4", "pll_p", 25411764, false}, /* sdhci-tegra.3 */
 
 	{ "la",			"clk_m",		 12000000,	false},			
 
@@ -261,7 +262,7 @@ static __initdata struct tegra_clk_init_table adam_clk_init_table[] = {
 	
 	{ "vcp",		"clk_m",		 12000000,	false},		/* tegra_avp */	
 	{ "bsea",		"clk_m",		 12000000,	false},		/* tegra_avp */	
-	{ "vde",		"pll_p",		216000000,	false},		/* tegra-avp */
+    { "vde", "pll_p", 240000000, false}, /* tegra-avp */
 	
 	{ "bsev",		"clk_m",		 12000000,	false},		/* tegra_aes */	
 
@@ -271,14 +272,14 @@ static __initdata struct tegra_clk_init_table adam_clk_init_table[] = {
 	{ "tvo",		"clk_m",		 12000000,	false},			
 	{ "tvdac",		"clk_m",		 12000000,	false},			
 
-	{ "usbd",		"clk_m",		 12000000,	false},		/* fsl-tegra-udc , utmip-pad , tegra_ehci.0 , tegra_otg */
+    { "usbd", "clk_m", 12000000, true}, /* fsl-tegra-udc , utmip-pad , tegra_ehci.0 , tegra_otg */
 	{ "usb2",		"clk_m",		 12000000,	false},		/* tegra_ehci.1 */
-	{ "usb3",		"clk_m",		 12000000,	false},		/* tegra_ehci.2 */
+    { "usb3", "clk_m", 12000000, true}, /* tegra_ehci.2 */
 	
-	{ "pwm",    	"clk_m",   		 12000000,  false},		/* tegra-pwm.0 tegra-pwm.1 tegra-pwm.2 tegra-pwm.3*/
+	{ "pwm",    	"clk_m",   		 12000000,  true},		/* tegra-pwm.0 tegra-pwm.1 tegra-pwm.2 tegra-pwm.3*/
 	
 	{ "kbc",		"clk_32k",			32768,	false},		/* tegra-kbc */
-	{ "blink",		"clk_32k",			32768,	false},		/* used for bluetooth */
+	{ "blink",		"clk_32k",			32768,	true},		/* used for bluetooth */
 
 	{ NULL,		NULL,		0,		0},
 };

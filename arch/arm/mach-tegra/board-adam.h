@@ -53,10 +53,10 @@
 
 // Adam memory is 2xSZ_512M
 #define ADAM_MEM_SIZE 		SZ_512M			/* Total memory */
-#define ADAM_MEM_BANKS		1
+#define ADAM_MEM_BANKS		2
 
-#define ADAM_GPU_MEM_SIZE 		SZ_128M		/* Memory reserved for GPU */
-//#define ADAM_GPU_MEM_SIZE 	SZ_64M			/* Memory reserved for GPU */
+//define ADAM_GPU_MEM_SIZE 		SZ_128M		/* Memory reserved for GPU */
+#define ADAM_GPU_MEM_SIZE 	SZ_64M			/* Memory reserved for GPU */
 //#define ADAM_GPU_MEM_SIZE    (45*SZ_2M)			/* Memory reserved for GPU */
 
 #define ADAM_FB1_MEM_SIZE 	SZ_8M			/* Memory reserved for Framebuffer 1: LCD */
@@ -146,8 +146,8 @@ extern int adam_touch_register_devices(void);
 extern int adam_sdhci_register_devices(void);
 extern int adam_sensors_register_devices(void);
 extern int adam_wlan_pm_register_devices(void);
-extern int adam_gps_pm_register_devices(void);
-extern int adam_gsm_pm_register_devices(void);
+//extern int adam_gps_pm_register_devices(void);
+//extern int adam_gsm_pm_register_devices(void);
 //extern int adam_bt_pm_register_devices(void);
 extern void adam_setup_bluesleep(void);
 extern void adam_bt_rfkill(void);

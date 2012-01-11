@@ -200,7 +200,6 @@ void tegra_pen_lock(void);
 void tegra_pen_unlock(void);
 void tegra_cpu_wfi(void);
 
-#ifdef CONFIG_ARCH_TEGRA_2x_SOC
 extern void tegra2_iram_start;
 extern void tegra2_iram_end;
 int  tegra2_cpu_is_resettable_soon(void);
@@ -210,39 +209,20 @@ void tegra2_cpu_clear_resettable(void);
 void tegra2_sleep_core(unsigned long v2p);
 void tegra2_hotplug_shutdown(void);
 void tegra2_sleep_wfi(unsigned long v2p);
-#else
-extern void tegra3_iram_start;
-extern void tegra3_iram_end;
-void tegra3_sleep_core(unsigned long v2p);
-void tegra3_sleep_cpu_secondary(unsigned long v2p);
-void tegra3_hotplug_shutdown(void);
-#endif
 
 static inline void *tegra_iram_start(void)
 {
-#ifdef CONFIG_ARCH_TEGRA_2x_SOC
 	return &tegra2_iram_start;
-#else
-	return &tegra3_iram_start;
-#endif
 }
 
 static inline void *tegra_iram_end(void)
 {
-#ifdef CONFIG_ARCH_TEGRA_2x_SOC
 	return &tegra2_iram_end;
-#else
-	return &tegra3_iram_end;
-#endif
 }
 
 static inline void tegra_sleep_core(unsigned long v2p)
 {
-#ifdef CONFIG_ARCH_TEGRA_2x_SOC
 	tegra2_sleep_core(v2p);
-#else
-	tegra3_sleep_core(v2p);
-#endif
 }
 
 void tegra_sleep_cpu(unsigned long v2p);
