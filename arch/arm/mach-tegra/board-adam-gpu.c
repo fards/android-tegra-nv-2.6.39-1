@@ -195,24 +195,24 @@ static struct tegra_fb_data adam_fb_data = {
 #if defined(ADAM_1920x1080HDMI)
 
 /* Frame buffer size assuming 16bpp color and 2 pages for page flipping */
-#define ADAM_FB_HDMI_SIZE TEGRA_ROUND_ALLOC(1920*1080*(16/8)*2)
+#define ADAM_FB_HDMI_SIZE TEGRA_ROUND_ALLOC(1920*1080*(32/8)*2)
 
 static struct tegra_fb_data adam_hdmi_fb_data = {
 	.win		= 0,
 	.xres		= 1920,
 	.yres		= 1080,
-	.bits_per_pixel	= 16,
+	.bits_per_pixel	= 32,
 };
 
 #else
 
-#define ADAM_FB_HDMI_SIZE TEGRA_ROUND_ALLOC(1280*720*(16/8)*2)
+#define ADAM_FB_HDMI_SIZE TEGRA_ROUND_ALLOC(1280*720*(32/8)*2)
 
 static struct tegra_fb_data adam_hdmi_fb_data = {
 	.win		= 0,
 	.xres		= 1280,
 	.yres		= 720,
-	.bits_per_pixel	= 16,
+	.bits_per_pixel	= 32,
 };
 #endif
 
@@ -226,7 +226,7 @@ static struct tegra_dc_out adam_disp1_out = {
                diffusion, but when the active region is less
                than 640 pixels wide. */
 			   /*based on fosser/trezorx idea ERRDIFF*/
-       .dither         = TEGRA_DC_ERRDIFF_DITHER,
+      // .dither         = TEGRA_DC_ERRDIFF_DITHER,
 
 	.height 	= 136, /* mm */
 	.width 		= 217, /* mm */
