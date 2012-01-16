@@ -372,5 +372,11 @@ config SND_SOC_TPA6130A2
 config SND_SOC_WM2000
 	tristate
 
+config ALC_SWAP_CHANNELS
+	bool "swap left/right audio channels" 
+	depends on SND_SOC_TEGRA_ALC5623
+	help
+	  On the Malata boards this puts the audio channels the correct way around .
+
 config SND_SOC_WM9090
 	tristate
