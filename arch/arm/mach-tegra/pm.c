@@ -1019,7 +1019,7 @@ out:
 	/* Initialize scratch registers used for CPU LP2 synchronization */
 	writel(0, pmc + PMC_SCRATCH37);
 	writel(0, pmc + PMC_SCRATCH38);
-	writel(0, pmc + PMC_SCRATCH39);
+//	writel(0, pmc + PMC_SCRATCH39);
 	writel(0, pmc + PMC_SCRATCH41);
 
 	/* Always enable CPU power request; just normal polarity is supported */
