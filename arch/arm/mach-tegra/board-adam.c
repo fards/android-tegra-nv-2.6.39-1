@@ -141,7 +141,7 @@ static struct tegra_suspend_platform_data adam_suspend = {
     .corereq_high = false,
 	.sysclkreq_high = true,
 	//.separate_req = true,
-	.suspend_mode = TEGRA_SUSPEND_LP1,
+	.suspend_mode = TEGRA_SUSPEND_LP0,
 };
 
 static void __init tegra_adam_init(void)
@@ -267,16 +267,20 @@ static void __init tegra_adam_fixup(struct machine_desc *desc,
 {
 	mi->nr_banks = ADAM_MEM_BANKS;
 	mi->bank[0].start = PHYS_OFFSET;
+	mi->bank[0].size = 448 * SZ_1M;
+	mi->bank[1].start = SZ_512M;
+	mi->bank[1].size = SZ_512M;
+	/*
 #if defined(DYNAMIC_GPU_MEM)
 	mi->bank[0].size  = ADAM_MEM_SIZE;
 #else
 	mi->bank[0].size  = ADAM_MEM_SIZE - ADAM_GPU_MEM_SIZE;
 #endif
-	// Adam has two 512MB banks. Easier to hardcode if we leave SMBA1002_MEM_SIZE at 512MB
-	//mi->bank[1].start = SMBA1002_MEM_SIZE;
-	//mi->bank[1].size = SMBA1002_MEM_SIZE;
-} 
-
+	// Adam has two 512MB banks. Easier to hardcode if we leave ADAM_MEM_SIZE at 512MB
+	mi->bank[1].start = ADAM_MEM_SIZE;
+	mi->bank[1].size = ADAM_MEM_SIZE;
+ */
+}
 MACHINE_START(HARMONY, "harmony")
 	.boot_params	= 0x00000100,
 	.map_io         = tegra_map_common_io,
